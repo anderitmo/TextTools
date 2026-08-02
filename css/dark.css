@@ -1,0 +1,71 @@
+/* ==========================================================================
+   TextTools - Dark Theme Color Overrides
+   ========================================================================== */
+
+html[data-theme="dark"] {
+  --bg-primary: #090d16;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1f2937;
+
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #6b7280;
+
+  --border-color: #374151;
+  --border-focus: #3b82f6;
+
+  --primary-color: #3b82f6;
+  --primary-hover: #60a5fa;
+  --accent-color: #374151;
+
+  --status-ideal: #10b981;
+  --status-warning: #f59e0b;
+  --status-exceeded: #f87171;
+  --status-info: #3b82f6;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.7), 0 4px 6px -4px rgb(0 0 0 / 0.7);
+}
+
+/* Specific styling overrides for dark mode components */
+html[data-theme="dark"] .tool-item-li:hover {
+  background-color: var(--bg-tertiary);
+}
+
+html[data-theme="dark"] .btn-filter.active {
+  background: #1e293b;
+  border-color: var(--border-focus);
+  color: var(--primary-color);
+}
+
+html[data-theme="dark"] .textarea-custom {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .counter-card {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+}
+
+html[data-theme="dark"] .btn-tool:hover {
+  background-color: var(--bg-tertiary);
+}
+
+html[data-theme="dark"] .btn-tool.active {
+  background-color: #1e3a8a;
+  border-color: var(--border-focus);
+}
+
+html[data-theme="dark"] .toast-message {
+  background-color: #1f2937;
+  color: #f9fafb;
+  border: 1px solid var(--border-color);
+}
+
+html[data-theme="dark"] .keyboard-kbd {
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}

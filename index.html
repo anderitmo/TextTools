@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TextTools - Manipulação & Análise de Texto Online</title>
+  <meta name="description" content="Ferramenta gratuita 100% no navegador para limpar, converter, organizar e analisar seus textos em tempo real. Sem envio de dados para servidores.">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Favicon placeholder or styling -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔤</text></svg>">
+</head>
+<body>
+
+  <!-- App Main Header Navbar -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon">🔤</span>
+      <h1 class="brand-name">TextTools</h1>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Theme Switcher -->
+      <div class="theme-select-wrapper">
+        <label for="theme-select" style="font-weight: 500; font-size: 13px; color: var(--text-secondary);">Tema:</label>
+        <select id="theme-select" class="select-custom" aria-label="Selecione o tema visual">
+          <option value="light">☀️ Claro</option>
+          <option value="dark">🌙 Escuro</option>
+          <option value="auto">💻 Automático</option>
+        </select>
+      </div>
+
+      <!-- Header actions buttons -->
+      <button id="btn-open-history" class="btn-icon-label" title="Ver histórico de alterações">
+        <span>⏳</span> Histórico
+      </button>
+      <button id="btn-open-about" class="btn-icon-label" title="Ajuda & Atalhos de teclado">
+        <span>❓</span> Atalhos
+      </button>
+    </div>
+  </header>
+
+  <!-- Container for the entire application grid -->
+  <main class="app-container">
+
+    <!-- Left Sidebar: Operations search, favorites and actions catalog -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="search-box-wrapper">
+          <input type="text" id="sidebar-search" class="sidebar-search-input" placeholder="Buscar ferramenta..." aria-label="Buscar ferramenta de manipulação">
+        </div>
+        <div class="sidebar-filter-actions">
+          <button id="btn-favorites-only" class="btn-filter" aria-label="Filtrar por favoritos">
+            ⭐ Favoritos
+          </button>
+        </div>
+      </div>
+
+      <div id="sidebar-tools" class="sidebar-scroll">
+        <!-- Rendered dynamically by js/ui.js -->
+      </div>
+    </aside>
+
+    <!-- Center Workspace: Actions Toolbar and Editor Panels -->
+    <section class="workspace-wrapper">
+
+      <!-- Action Toolbar -->
+      <div class="toolbar" aria-label="Barra de ferramentas de texto rápido">
+        <div class="toolbar-group">
+          <button id="tb-paste" class="btn-tool" title="Colar texto da área de transferência">
+            <span>📋</span> Colar
+          </button>
+          <button id="tb-copy" class="btn-tool" title="Copiar texto resultante">
+            <span>✂️</span> Copiar
+          </button>
+          <button id="tb-clear" class="btn-tool" title="Limpar tudo">
+            <span>🧹</span> Limpar
+          </button>
+        </div>
+
+        <div class="toolbar-group">
+          <button id="tb-undo" class="btn-tool" title="Desfazer alteração (Ctrl+Z)">
+            <span>↩️</span> Desfazer
+          </button>
+          <button id="tb-redo" class="btn-tool" title="Refazer alteração (Ctrl+Y)">
+            <span>↪️</span> Refazer
+          </button>
+        </div>
+
+        <div class="toolbar-group">
+          <!-- Text Files Upload and Download -->
+          <button id="tb-upload" class="btn-tool" title="Enviar arquivo de texto (.txt)">
+            <span>📤</span> Upload TXT
+          </button>
+          <input type="file" id="file-loader" class="hidden-uploader" accept=".txt,.csv,.json,.md,.sql" aria-label="Upload de arquivo de texto">
+
+          <button id="tb-download" class="btn-tool" title="Baixar resultado em arquivo .txt">
+            <span>💾</span> Download TXT
+          </button>
+        </div>
+
+        <div class="toolbar-group">
+          <!-- Sharer and Fullscreen options -->
+          <button id="tb-share" class="btn-tool" title="Copiar link de compartilhamento deste texto">
+            <span>🔗</span> Compartilhar
+          </button>
+          <button id="tb-fullscreen" class="btn-tool" title="Ativar tela cheia do editor">
+            <span>🖥️</span> Tela Cheia
+          </button>
+        </div>
+      </div>
+
+      <!-- Double Pane Text Editor -->
+      <div class="editor-pane-grid">
+        <div class="editor-box">
+          <div class="editor-box-header">
+            <span class="editor-title">Entrada (Input)</span>
+          </div>
+          <textarea id="editor-input" class="textarea-custom" placeholder="Cole ou digite seu texto aqui..." aria-label="Área de texto de entrada"></textarea>
+        </div>
+
+        <div class="editor-box">
+          <div class="editor-box-header">
+            <span class="editor-title">Resultado (Output)</span>
+          </div>
+          <textarea id="editor-output" class="textarea-custom" placeholder="O resultado aparecerá aqui..." readonly aria-label="Área de texto de resultado"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Sidebar: Metrics, Statistics, Readability Metrics & SEO meters -->
+    <aside class="dashboard" aria-label="Painel de análise de texto em tempo real">
+      <h2 class="dashboard-title">Análise em Tempo Real</h2>
+
+      <!-- Section: Basic Counters -->
+      <div class="dashboard-section">
+        <h3 class="section-title">Contadores de Texto</h3>
+        <div class="counters-grid">
+          <div class="counter-card">
+            <div id="count-chars" class="counter-val">0</div>
+            <div class="counter-label">Caracteres</div>
+          </div>
+          <div class="counter-card">
+            <div id="count-chars-nospace" class="counter-val">0</div>
+            <div class="counter-label">Sem espaços</div>
+          </div>
+          <div class="counter-card">
+            <div id="count-words" class="counter-val">0</div>
+            <div class="counter-label">Palavras</div>
+          </div>
+          <div class="counter-card">
+            <div id="count-lines" class="counter-val">0</div>
+            <div class="counter-label">Linhas</div>
+          </div>
+          <div class="counter-card">
+            <div id="count-sentences" class="counter-val">0</div>
+            <div class="counter-label">Frases</div>
+          </div>
+          <div class="counter-card">
+            <div id="count-paragraphs" class="counter-val">0</div>
+            <div class="counter-label">Parágrafos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Text Statistics -->
+      <div class="dashboard-section">
+        <h3 class="section-title">Estatísticas de Leitura</h3>
+        <div class="metrics-list">
+          <div class="metric-row">
+            <span class="metric-label">Tempo estimado de leitura:</span>
+            <span id="stat-reading-time" class="metric-val">0 s</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Tempo estimado de fala:</span>
+            <span id="stat-speaking-time" class="metric-val">0 s</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Letras:</span>
+            <span id="stat-letters" class="metric-val">0</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Dígitos:</span>
+            <span id="stat-digits" class="metric-val">0</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Espaços em branco:</span>
+            <span id="stat-spaces" class="metric-val">0</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Símbolos & Pontuação:</span>
+            <span id="stat-symbols" class="metric-val">0</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Estimativa de Tokens (IA):</span>
+            <span id="stat-tokens" class="metric-val">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: SEO Limits Progress Gauges -->
+      <div class="dashboard-section">
+        <h3 class="section-title">Análise de Metas de SEO</h3>
+        <div class="seo-gauge-wrapper">
+
+          <div class="seo-item">
+            <div class="seo-item-header">
+              <span class="seo-label">Google Title (50-60 chars)</span>
+              <span id="seo-title-status" class="seo-status-text info">Vazio</span>
+            </div>
+            <div class="seo-progress-outer">
+              <div id="seo-title-bar" class="seo-progress-inner info"></div>
+            </div>
+          </div>
+
+          <div class="seo-item">
+            <div class="seo-item-header">
+              <span class="seo-label">Meta Description (150-160 chars)</span>
+              <span id="seo-meta-status" class="seo-status-text info">Vazio</span>
+            </div>
+            <div class="seo-progress-outer">
+              <div id="seo-meta-bar" class="seo-progress-inner info"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- MODAL: History of Operations -->
+  <div id="modal-history" class="modal-overlay" role="dialog" aria-labelledby="history-modal-title" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="history-modal-title">Histórico de Operações</h2>
+        <button id="btn-close-history" class="modal-close-btn" aria-label="Fechar histórico">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="history-list">
+          <!-- Rendered dynamically by js/ui.js -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-clear-history" class="btn-danger">Limpar Histórico</button>
+        <button id="btn-close-history-footer" class="btn-secondary" onclick="document.getElementById('modal-history').classList.remove('visible')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: About / Shortcuts & Help -->
+  <div id="modal-about" class="modal-overlay" role="dialog" aria-labelledby="about-modal-title" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="about-modal-title">Ajuda & Atalhos de Teclado</h2>
+        <button id="btn-close-about" class="modal-close-btn" aria-label="Fechar ajuda">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size: 14px; line-height: 1.6; color: var(--text-secondary);">
+        <p style="margin-bottom: 12px;"><strong>TextTools</strong> é uma coleção completa de ferramentas offline gratuitas de processamento e manipulação de strings. Todos os algoritmos rodam de forma privada e segura no seu próprio navegador.</p>
+
+        <h3 class="section-title" style="margin-top: 15px; margin-bottom: 5px;">Atalhos Rápidos de Teclado</h3>
+        <p>Use estas combinações globais para disparar as manipulações mais frequentes instantaneamente:</p>
+
+        <table class="shortcuts-table">
+          <thead>
+            <tr>
+              <th>Atalho</th>
+              <th>Operação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><kbd class="keyboard-kbd">Ctrl</kbd> + <kbd class="keyboard-kbd">Shift</kbd> + <kbd class="keyboard-kbd">U</kbd></td>
+              <td>Converter texto selecionado/completo para UPPERCASE</td>
+            </tr>
+            <tr>
+              <td><kbd class="keyboard-kbd">Ctrl</kbd> + <kbd class="keyboard-kbd">Shift</kbd> + <kbd class="keyboard-kbd">L</kbd></td>
+              <td>Converter texto selecionado/completo para lowercase</td>
+            </tr>
+            <tr>
+              <td><kbd class="keyboard-kbd">Ctrl</kbd> + <kbd class="keyboard-kbd">Shift</kbd> + <kbd class="keyboard-kbd">C</kbd></td>
+              <td>Capitalizar Palavras (Primeira letra de cada palavra maiúscula)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-close-about-footer" class="btn-secondary" onclick="document.getElementById('modal-about').classList.remove('visible')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Boostrap module script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
