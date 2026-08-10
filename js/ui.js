@@ -11,7 +11,7 @@ export const OPERATIONS = [
     category: 'Conversão',
     name: 'Converter para lowercase',
     description: 'Transforma todas as letras do texto em minúsculas.',
-    icon: '🔤',
+    icon: 'case-lower',
     fn: transform.lowercase
   },
   {
@@ -19,7 +19,7 @@ export const OPERATIONS = [
     category: 'Conversão',
     name: 'Converter para UPPERCASE',
     description: 'Transforma todas as letras do texto em maiúsculas.',
-    icon: '🔠',
+    icon: 'case-upper',
     fn: transform.uppercase
   },
   {
@@ -27,7 +27,7 @@ export const OPERATIONS = [
     category: 'Conversão',
     name: 'Capitalizar Palavras',
     description: 'Coloca a primeira letra de cada palavra em maiúscula.',
-    icon: '✍️',
+    icon: 'case-sensitive',
     fn: transform.capitalizeWords
   },
   {
@@ -35,7 +35,7 @@ export const OPERATIONS = [
     category: 'Conversão',
     name: 'Sentence Case',
     description: 'Deixa a primeira letra de cada frase em maiúscula e o resto em minúscula.',
-    icon: '📝',
+    icon: 'type',
     fn: transform.sentenceCase
   },
   {
@@ -43,7 +43,7 @@ export const OPERATIONS = [
     category: 'Conversão',
     name: 'InVeRsO',
     description: 'Inverte o padrão de maiúsculas/minúsculas de cada caractere.',
-    icon: '🔄',
+    icon: 'refresh-cw',
     fn: transform.toggleCase
   },
   {
@@ -51,7 +51,7 @@ export const OPERATIONS = [
     category: 'Conversão',
     name: 'Primeira letra maiúscula',
     description: 'Coloca apenas a primeiríssima letra do texto em maiúscula.',
-    icon: '⬆️',
+    icon: 'arrow-up-to-line',
     fn: transform.capitalizeFirst
   },
   {
@@ -59,7 +59,7 @@ export const OPERATIONS = [
     category: 'Conversão',
     name: 'Primeira letra minúscula',
     description: 'Coloca apenas a primeiríssima letra do texto em minúscula.',
-    icon: '⬇️',
+    icon: 'arrow-down-to-line',
     fn: transform.lowercaseFirst
   },
 
@@ -69,7 +69,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover espaços duplicados',
     description: 'Substitui espaços e tabulações múltiplas por um único espaço.',
-    icon: '🧹',
+    icon: 'sparkles',
     fn: transform.removeDuplicateSpaces
   },
   {
@@ -77,7 +77,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover linhas vazias',
     description: 'Exclui todas as linhas que estão totalmente vazias.',
-    icon: '🗑️',
+    icon: 'wrap-text',
     fn: transform.removeEmptyLines
   },
   {
@@ -85,7 +85,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover tabulações',
     description: 'Apaga todos os caracteres de tabulação (Tab).',
-    icon: '⇥',
+    icon: 'indent-decrease',
     fn: transform.removeTabs
   },
   {
@@ -93,7 +93,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover acentos',
     description: 'Normaliza o texto removendo acentos e diacríticos.',
-    icon: 'a',
+    icon: 'languages',
     fn: transform.removeAccents
   },
   {
@@ -101,7 +101,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover emojis',
     description: 'Filtra e apaga emoticons e emojis.',
-    icon: '😀',
+    icon: 'smile',
     fn: transform.removeEmojis
   },
   {
@@ -109,7 +109,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover caracteres especiais',
     description: 'Mantém apenas letras, números e espaços básicos.',
-    icon: '✖️',
+    icon: 'slash-by-subtraction',
     fn: transform.removeSpecialChars
   },
   {
@@ -117,7 +117,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover números',
     description: 'Apaga todos os dígitos numéricos (0-9).',
-    icon: '1️⃣',
+    icon: 'binary',
     fn: transform.removeNumbers
   },
   {
@@ -125,7 +125,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover letras',
     description: 'Apaga qualquer letra do alfabeto do texto.',
-    icon: '🔤',
+    icon: 'whole-word',
     fn: transform.removeLetters
   },
   {
@@ -133,7 +133,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover pontuação',
     description: 'Remove símbolos de pontuação e caracteres de sintaxe.',
-    icon: '❓',
+    icon: 'help-circle',
     fn: transform.removePunctuation
   },
 
@@ -143,7 +143,7 @@ export const OPERATIONS = [
     category: 'Organização',
     name: 'Ordenar A → Z',
     description: 'Ordena as linhas do texto em ordem alfabética ascendente.',
-    icon: '📈',
+    icon: 'sort-asc',
     fn: transform.sortLinesAsc
   },
   {
@@ -151,7 +151,7 @@ export const OPERATIONS = [
     category: 'Organização',
     name: 'Ordenar Z → A',
     description: 'Ordena as linhas do texto em ordem alfabética descendente.',
-    icon: '📉',
+    icon: 'sort-desc',
     fn: transform.sortLinesDesc
   },
   {
@@ -159,7 +159,7 @@ export const OPERATIONS = [
     category: 'Organização',
     name: 'Remover linhas duplicadas',
     description: 'Remove linhas repetidas, mantendo apenas a primeira ocorrência.',
-    icon: '👥',
+    icon: 'copy-minus',
     fn: transform.removeDuplicateLines
   },
   {
@@ -167,7 +167,7 @@ export const OPERATIONS = [
     category: 'Organização',
     name: 'Embaralhar linhas',
     description: 'Randomiza a ordem de todas as linhas.',
-    icon: '🎲',
+    icon: 'shuffle',
     fn: transform.shuffleLines
   },
   {
@@ -175,7 +175,7 @@ export const OPERATIONS = [
     category: 'Organização',
     name: 'Inverter ordem das linhas',
     description: 'Inverte a sequência de linhas do texto (de trás para frente).',
-    icon: '↔️',
+    icon: 'move-vertical',
     fn: transform.reverseLines
   },
   {
@@ -183,7 +183,7 @@ export const OPERATIONS = [
     category: 'Organização',
     name: 'Numerar linhas',
     description: 'Adiciona número sequencial no início de cada linha.',
-    icon: '#️⃣',
+    icon: 'list-ordered',
     fn: transform.numberLines
   },
   {
@@ -191,7 +191,7 @@ export const OPERATIONS = [
     category: 'Organização',
     name: 'Remover numeração existente',
     description: 'Remove números sequenciais do início de cada linha.',
-    icon: '🚫',
+    icon: 'list-todo',
     fn: transform.removeLineNumbers
   },
 
@@ -201,7 +201,7 @@ export const OPERATIONS = [
     category: 'Conversões',
     name: 'Linhas → Vírgulas',
     description: 'Junta as linhas separando-as por uma vírgula.',
-    icon: '➔',
+    icon: 'arrow-right-left',
     fn: transform.linesToCommas
   },
   {
@@ -209,7 +209,7 @@ export const OPERATIONS = [
     category: 'Conversões',
     name: 'Linhas → Pipe',
     description: 'Junta as linhas separando-as por uma barra vertical (|).',
-    icon: '➔',
+    icon: 'arrow-right-left',
     fn: transform.linesToPipes
   },
   {
@@ -217,7 +217,7 @@ export const OPERATIONS = [
     category: 'Conversões',
     name: 'Linhas → Ponto e vírgula',
     description: 'Junta as linhas separando-as por ponto e vírgula (;).',
-    icon: '➔',
+    icon: 'arrow-right-left',
     fn: transform.linesToSemicolons
   },
   {
@@ -225,7 +225,7 @@ export const OPERATIONS = [
     category: 'Conversões',
     name: 'Vírgulas → Linhas',
     description: 'Separa itens separados por vírgula em linhas individuais.',
-    icon: '⬇️',
+    icon: 'arrow-down-up',
     fn: transform.commasToLines
   },
   {
@@ -233,7 +233,7 @@ export const OPERATIONS = [
     category: 'Conversões',
     name: 'Juntar linhas',
     description: 'Junta todas as linhas em uma única linha contínua.',
-    icon: '🔗',
+    icon: 'link',
     fn: transform.joinLines
   },
   {
@@ -241,7 +241,7 @@ export const OPERATIONS = [
     category: 'Conversões',
     name: 'Dividir texto por delimitador',
     description: 'Divide o texto por um caractere delimitador personalizado para criar linhas.',
-    icon: '✂️',
+    icon: 'scissors',
     hasPrompt: true,
     promptMsg: 'Digite o delimitador a ser usado para a divisão:',
     defaultPromptVal: ',',
@@ -254,7 +254,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'Base64 Encode',
     description: 'Codifica o texto no formato padrão Base64 (compatível com Unicode).',
-    icon: '🔐',
+    icon: 'lock',
     fn: transform.base64Encode
   },
   {
@@ -262,7 +262,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'Base64 Decode',
     description: 'Decodifica uma string Base64 de volta para texto legível.',
-    icon: '🔓',
+    icon: 'unlock',
     fn: transform.base64Decode
   },
   {
@@ -270,7 +270,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'URL Encode',
     description: 'Substitui caracteres especiais do texto para uso seguro em URLs.',
-    icon: '🌐',
+    icon: 'globe',
     fn: transform.urlEncode
   },
   {
@@ -278,7 +278,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'URL Decode',
     description: 'Decodifica uma URL codificada de volta para texto normal.',
-    icon: '🗺️',
+    icon: 'map',
     fn: transform.urlDecode
   },
   {
@@ -286,7 +286,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'Escape HTML',
     description: 'Escapa tags HTML transformando-as em entidades seguras.',
-    icon: '💻',
+    icon: 'code',
     fn: transform.escapeHtml
   },
   {
@@ -294,7 +294,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'Unescape HTML',
     description: 'Restaura entidades HTML de volta para código ou texto legível.',
-    icon: '🖥️',
+    icon: 'terminal',
     fn: transform.unescapeHtml
   },
   {
@@ -302,7 +302,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'JSON Pretty Print',
     description: 'Formata uma string JSON crua com espaçamento legível e identação.',
-    icon: '✨',
+    icon: 'file-json-2',
     fn: transform.jsonPretty
   },
   {
@@ -310,7 +310,7 @@ export const OPERATIONS = [
     category: 'Desenvolvedor',
     name: 'JSON Minify',
     description: 'Remove espaços extras, comentários e quebras de linha de um JSON.',
-    icon: '⚡',
+    icon: 'file-json',
     fn: transform.jsonMinify
   },
 
@@ -320,7 +320,7 @@ export const OPERATIONS = [
     category: 'Markdown',
     name: 'Gerar lista',
     description: 'Insere marcadores de lista não ordenada (-) em todas as linhas.',
-    icon: '➖',
+    icon: 'list',
     fn: transform.generateMarkdownList
   },
   {
@@ -328,7 +328,7 @@ export const OPERATIONS = [
     category: 'Markdown',
     name: 'Gerar checklist',
     description: 'Transforma linhas em uma lista de tarefas interativa (- [ ]).',
-    icon: '☑️',
+    icon: 'list-checks',
     fn: transform.generateMarkdownChecklist
   },
   {
@@ -336,7 +336,7 @@ export const OPERATIONS = [
     category: 'Markdown',
     name: 'Remover Markdown',
     description: 'Limpa formatações como títulos, negritos, links e listas, preservando o texto puro.',
-    icon: '📄',
+    icon: 'file-text',
     fn: transform.removeMarkdown
   },
 
@@ -346,7 +346,7 @@ export const OPERATIONS = [
     category: 'SQL',
     name: "Converter para IN ('A','B','C')",
     description: 'Transforma uma lista de linhas em uma instrução SQL IN bem formatada.',
-    icon: '🗄️',
+    icon: 'database',
     fn: transform.convertToSqlIn
   },
   {
@@ -354,7 +354,7 @@ export const OPERATIONS = [
     category: 'SQL',
     name: 'Adicionar aspas',
     description: 'Envolve cada linha do texto entre aspas simples.',
-    icon: '💬',
+    icon: 'quote',
     hasPrompt: true,
     promptMsg: 'Digite o caractere de aspas desejado (\' ou "):',
     defaultPromptVal: "'",
@@ -365,7 +365,7 @@ export const OPERATIONS = [
     category: 'SQL',
     name: 'Adicionar vírgulas',
     description: 'Adiciona uma vírgula no final de cada linha.',
-    icon: '➕',
+    icon: 'plus',
     fn: transform.addCommas
   },
   {
@@ -373,7 +373,7 @@ export const OPERATIONS = [
     category: 'SQL',
     name: 'Adicionar parênteses',
     description: 'Envolve o texto de cada linha individual entre parênteses ().',
-    icon: '﹙',
+    icon: 'parentheses',
     fn: transform.addParentheses
   },
   {
@@ -381,7 +381,7 @@ export const OPERATIONS = [
     category: 'SQL',
     name: 'Adicionar prefixos',
     description: 'Insere um prefixo personalizado no começo de cada linha.',
-    icon: '▶️',
+    icon: 'chevron-right',
     hasPrompt: true,
     promptMsg: 'Digite o prefixo que deseja adicionar:',
     defaultPromptVal: '',
@@ -392,7 +392,7 @@ export const OPERATIONS = [
     category: 'SQL',
     name: 'Adicionar sufixos',
     description: 'Insere um sufixo personalizado no fim de cada linha.',
-    icon: '◀️',
+    icon: 'chevron-left',
     hasPrompt: true,
     promptMsg: 'Digite o sufixo que deseja adicionar:',
     defaultPromptVal: '',
@@ -405,7 +405,7 @@ export const OPERATIONS = [
     category: 'CSV',
     name: 'Converter Lista para CSV',
     description: 'Agrupa as linhas em uma única sequência de strings cercadas por aspas e separadas por vírgula.',
-    icon: '📊',
+    icon: 'table-properties',
     fn: transform.listToCSV
   },
   {
@@ -413,7 +413,7 @@ export const OPERATIONS = [
     category: 'CSV',
     name: 'Converter CSV para Lista',
     description: 'Quebra uma linha formatada em CSV de volta em linhas individuais correspondentes.',
-    icon: '📋',
+    icon: 'table-2',
     fn: transform.csvToList
   },
 
@@ -423,7 +423,7 @@ export const OPERATIONS = [
     category: 'SEO',
     name: 'Contador de Título (Title)',
     description: 'Avalia o tamanho do texto atual e mostra se ele está no padrão aceitável do Google Title (50-60 caracteres).',
-    icon: '🔎',
+    icon: 'search-code',
     fn: (text) => text // directly updates visual state
   },
   {
@@ -431,7 +431,7 @@ export const OPERATIONS = [
     category: 'SEO',
     name: 'Contador de Meta Description',
     description: 'Mede o texto atual para verificar conformidade com o limite ideal de Meta Description (150-160 caracteres).',
-    icon: '📈',
+    icon: 'search-check',
     fn: (text) => text
   },
 
@@ -441,7 +441,7 @@ export const OPERATIONS = [
     category: 'IA',
     name: 'Remover quebras de linha',
     description: 'Remove todas as quebras de linha e concatena em um parágrafo único, ideal para tradutores e IAs.',
-    icon: '🤖',
+    icon: 'bot',
     fn: transform.removeLineBreaks
   },
   {
@@ -449,7 +449,7 @@ export const OPERATIONS = [
     category: 'IA',
     name: 'Compactar prompt',
     description: 'Encolhe o prompt limpando excessos de espaço e linhas vazias redundantes.',
-    icon: '🧠',
+    icon: 'brain-circuit',
     fn: transform.compactPrompt
   },
   {
@@ -457,7 +457,7 @@ export const OPERATIONS = [
     category: 'IA',
     name: 'Limpeza de espaços',
     description: 'Reorganiza e unifica múltiplos espaços ou quebras para economizar tokens.',
-    icon: '🌌',
+    icon: 'wand-2',
     fn: transform.cleanSpaces
   },
 
@@ -467,7 +467,7 @@ export const OPERATIONS = [
     category: 'Acadêmico',
     name: 'Ordenar referências',
     description: 'Organiza em ordem alfabética referências bibliográficas do tipo ABNT ou APA.',
-    icon: '🎓',
+    icon: 'book-open',
     fn: transform.sortReferences
   },
   {
@@ -475,7 +475,7 @@ export const OPERATIONS = [
     category: 'Acadêmico',
     name: 'Remover referências duplicadas',
     description: 'Identifica e remove referências bibliográficas idênticas ou muito semelhantes.',
-    icon: '📚',
+    icon: 'library',
     fn: transform.removeDuplicateReferences
   },
   {
@@ -483,7 +483,7 @@ export const OPERATIONS = [
     category: 'Acadêmico',
     name: 'Normalizar espaçamentos',
     description: 'Ajusta espaços em branco e ajusta a pontuação em conformidade com normas científicas.',
-    icon: '🖊️',
+    icon: 'pen-tool',
     fn: transform.normalizeAcademicSpacing
   }
 ];
@@ -542,11 +542,11 @@ export function renderSidebar(query = '', favoritesOnly = false) {
 
       li.innerHTML = `
         <button class="tool-btn" title="${op.description}">
-          <span class="tool-icon">${op.icon}</span>
+          <span class="tool-icon"><i data-lucide="${op.icon}"></i></span>
           <span class="tool-name">${op.name}</span>
         </button>
         <button class="fav-star-btn" aria-label="Favoritar ferramenta" title="${isFav ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}">
-          ${isFav ? '★' : '☆'}
+          <i data-lucide="${isFav ? 'star' : 'star'}" class="${isFav ? 'star-filled' : 'star-empty'}"></i>
         </button>
       `;
 
@@ -571,6 +571,10 @@ export function renderSidebar(query = '', favoritesOnly = false) {
     section.appendChild(list);
     sidebarContainer.appendChild(section);
   });
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 }
 
 /**
@@ -584,7 +588,9 @@ export function triggerOperation(operationId) {
   const outputEl = document.getElementById('editor-output');
   if (!inputEl || !outputEl) return;
 
-  const textBefore = inputEl.value;
+  // Encadeamento: se o output já tiver algum resultado, usamos ele como base para a próxima operação.
+  // Caso contrário, usamos o conteúdo do input.
+  const textBefore = outputEl.value || inputEl.value;
   let textAfter = '';
 
   if (op.hasPrompt) {
@@ -597,6 +603,9 @@ export function triggerOperation(operationId) {
 
   // Update output value
   outputEl.value = textAfter;
+
+  // Update metrics for the current result
+  updateMetrics(textAfter);
 
   // Push changes to undo stack of App state
   if (window.editorUndoRedo) {
@@ -645,7 +654,9 @@ export function renderHistory() {
         <div><strong>De:</strong> <span class="text-preview-code">${escapeTextPreview(entry.textBefore)}</span></div>
         <div><strong>Para:</strong> <span class="text-preview-code">${escapeTextPreview(entry.textAfter)}</span></div>
       </div>
-      <button class="history-restore-btn" title="Restaurar este resultado no Output">Restaurar no Output</button>
+      <button class="history-restore-btn" title="Restaurar este resultado no Output">
+        <i data-lucide="rotate-ccw" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Restaurar no Output
+      </button>
     `;
 
     div.querySelector('.history-restore-btn').addEventListener('click', () => {
@@ -661,6 +672,10 @@ export function renderHistory() {
 
     historyContainer.appendChild(div);
   });
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 }
 
 function escapeTextPreview(text) {
