@@ -37,6 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSidebar();
   renderHistory();
 
+  // Initialize Lucide Icons
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+
   // 5. Initialize active visual theme
   initTheme();
 
@@ -48,9 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
  * Orchestrates all interactive events, buttons, and inputs.
  */
 function setupEventListeners(inputEl, outputEl) {
-  // Input keyups / inputs: update metrics in real time & save session
+  // Input keyups / inputs: update metrics in real time, clear Output to preserve flow, & save session
   inputEl.addEventListener('input', () => {
     const text = inputEl.value;
+    outputEl.value = ''; // Limpar o output ao editar o input de forma a reiniciar a cadeia
     updateMetrics(text);
     storage.saveLastText(text);
   });
@@ -137,6 +143,7 @@ function setupEventListeners(inputEl, outputEl) {
       const prev = window.editorUndoRedo.undo();
       if (prev !== null) {
         outputEl.value = prev;
+        updateMetrics(prev || inputEl.value);
         showToast('Desfeito!');
       } else {
         showToast('Nada para desfazer.');
@@ -151,6 +158,7 @@ function setupEventListeners(inputEl, outputEl) {
       const next = window.editorUndoRedo.redo();
       if (next !== null) {
         outputEl.value = next;
+        updateMetrics(next);
         showToast('Reffeito!');
       } else {
         showToast('Nada para refazer.');

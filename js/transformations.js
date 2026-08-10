@@ -55,18 +55,24 @@ export function toggleCase(text) {
 
 /**
  * Capitalizes only the first letter of the entire text.
+ * Respects leading whitespace/symbols and capitalizes the first alphabetical character.
  */
 export function capitalizeFirst(text) {
   if (!text) return '';
-  return text.charAt(0).toUpperCase() + text.slice(1);
+  return text.replace(/(^\s*|[^a-zA-Z\d\s]*)(\p{L})/u, (match, before, char) => {
+    return before + char.toUpperCase();
+  });
 }
 
 /**
  * Lowercases only the first letter of the entire text.
+ * Respects leading whitespace/symbols and lowercases the first alphabetical character.
  */
 export function lowercaseFirst(text) {
   if (!text) return '';
-  return text.charAt(0).toLowerCase() + text.slice(1);
+  return text.replace(/(^\s*|[^a-zA-Z\d\s]*)(\p{L})/u, (match, before, char) => {
+    return before + char.toLowerCase();
+  });
 }
 
 
