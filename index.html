@@ -114,13 +114,7 @@
         </div>
 
         <div class="toolbar-group">
-          <!-- Sharer, MD Preview, External Viewer and Fullscreen options -->
-          <button id="tb-preview-md" class="btn-tool" title="Visualizar resultado formatado em Markdown">
-            <i data-lucide="eye"></i> Visualizar MD
-          </button>
-          <button id="tb-export-external-md" class="btn-tool" title="Abrir no Visualizador MD Externo">
-            <i data-lucide="external-link"></i> Enviar p/ Visualizador MD
-          </button>
+          <!-- Sharer and Fullscreen options -->
           <button id="tb-share" class="btn-tool" title="Copiar link de compartilhamento deste texto">
             <i data-lucide="share-2"></i> Compartilhar
           </button>
@@ -135,6 +129,14 @@
         <div class="editor-box">
           <div class="editor-box-header">
             <span class="editor-title">Entrada (Input)</span>
+            <div class="editor-box-actions">
+              <button id="btn-input-preview-md" class="btn-editor-action" title="Visualizar o Markdown da Entrada">
+                <i data-lucide="eye"></i> Visualizar MD
+              </button>
+              <button id="btn-input-export-md" class="btn-editor-action" title="Enviar Markdown da Entrada para Visualizador Externo">
+                <i data-lucide="external-link"></i> Enviar p/ Visualizador MD
+              </button>
+            </div>
           </div>
           <textarea id="editor-input" class="textarea-custom" placeholder="Cole ou digite seu texto aqui..." aria-label="Área de texto de entrada"></textarea>
         </div>
@@ -142,6 +144,14 @@
         <div class="editor-box">
           <div class="editor-box-header">
             <span class="editor-title">Resultado (Output)</span>
+            <div class="editor-box-actions">
+              <button id="btn-output-preview-md" class="btn-editor-action" title="Visualizar o Markdown do Resultado">
+                <i data-lucide="eye"></i> Visualizar MD
+              </button>
+              <button id="btn-output-export-md" class="btn-editor-action" title="Enviar Markdown do Resultado para Visualizador Externo">
+                <i data-lucide="external-link"></i> Enviar p/ Visualizador MD
+              </button>
+            </div>
           </div>
           <textarea id="editor-output" class="textarea-custom" placeholder="O resultado aparecerá aqui..." readonly aria-label="Área de texto de resultado"></textarea>
         </div>

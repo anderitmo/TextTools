@@ -415,11 +415,12 @@ body {
 
 .editor-box-header {
   background: var(--bg-tertiary);
-  padding: 8px 16px;
+  padding: 6px 14px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 38px;
 }
 
 .editor-title {
@@ -428,6 +429,38 @@ body {
   font-weight: 700;
   letter-spacing: 0.05em;
   color: var(--text-secondary);
+}
+
+.editor-box-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-editor-action {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.btn-editor-action svg {
+  width: 12px;
+  height: 12px;
+}
+
+.btn-editor-action:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
 }
 
 .textarea-custom {
