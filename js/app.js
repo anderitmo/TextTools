@@ -255,17 +255,22 @@ function setupEventListeners(inputEl, outputEl) {
     });
   }
 
-  // Preview Markdown Modal
-  const btnPreviewMd = document.getElementById('tb-preview-md');
+  // Preview Markdown Modal Logic
   const modalPreviewMd = document.getElementById('modal-preview-md');
   const btnClosePreviewMd = document.getElementById('btn-close-preview-md');
   const mdRenderedContainer = document.getElementById('markdown-rendered-content');
+  const modalPreviewTitle = document.getElementById('preview-md-modal-title');
 
-  const openPreviewModal = () => {
-    const textToPreview = outputEl.value || inputEl.value;
+  let activeTextForModal = '';
+
+  const openPreviewModal = (textToPreview, sourceName = 'Entrada') => {
     if (!textToPreview) {
-      showToast('Nenhum texto/Markdown para visualizar!');
+      showToast(`Nenhum texto/Markdown na ${sourceName} para visualizar!`);
       return;
+    }
+    activeTextForModal = textToPreview;
+    if (modalPreviewTitle) {
+      modalPreviewTitle.textContent = `Visualização Markdown (${sourceName})`;
     }
     if (typeof marked !== 'undefined') {
       mdRenderedContainer.innerHTML = marked.parse(textToPreview);
@@ -275,8 +280,42 @@ function setupEventListeners(inputEl, outputEl) {
     modalPreviewMd?.classList.add('visible');
   };
 
-  if (btnPreviewMd) {
-    btnPreviewMd.addEventListener('click', openPreviewModal);
+  // Input Box Actions
+  const btnInputPreviewMd = document.getElementById('btn-input-preview-md');
+  const btnInputExportMd = document.getElementById('btn-input-export-md');
+
+  if (btnInputPreviewMd) {
+    btnInputPreviewMd.addEventListener('click', () => openPreviewModal(inputEl.value, 'Entrada (Input)'));
+  }
+
+  if (btnInputExportMd) {
+    btnInputExportMd.addEventListener('click', () => {
+      if (!inputEl.value) {
+        showToast('Nenhum texto na Entrada para enviar ao visualizador externo!');
+        return;
+      }
+      utils.sendToExternalMdViewer(inputEl.value);
+      showToast('Abrindo Markdown da Entrada no visualizador externo...');
+    });
+  }
+
+  // Output Box Actions
+  const btnOutputPreviewMd = document.getElementById('btn-output-preview-md');
+  const btnOutputExportMd = document.getElementById('btn-output-export-md');
+
+  if (btnOutputPreviewMd) {
+    btnOutputPreviewMd.addEventListener('click', () => openPreviewModal(outputEl.value, 'Resultado (Output)'));
+  }
+
+  if (btnOutputExportMd) {
+    btnOutputExportMd.addEventListener('click', () => {
+      if (!outputEl.value) {
+        showToast('Nenhum texto no Resultado para enviar ao visualizador externo!');
+        return;
+      }
+      utils.sendToExternalMdViewer(outputEl.value);
+      showToast('Abrindo Markdown do Resultado no visualizador externo...');
+    });
   }
 
   if (btnClosePreviewMd && modalPreviewMd) {
@@ -285,26 +324,17 @@ function setupEventListeners(inputEl, outputEl) {
     });
   }
 
-  // Export to External Visualizer (visualizador-md-com-post)
-  const btnExportExternalMd = document.getElementById('tb-export-external-md');
+  // Export to External Visualizer from inside the Preview Modal
   const btnOpenExternalFromModal = document.getElementById('btn-open-external-from-modal');
-
-  const handleExternalExport = () => {
-    const textToExport = outputEl.value || inputEl.value;
-    if (!textToExport) {
-      showToast('Nenhum texto para enviar ao visualizador externo!');
-      return;
-    }
-    utils.sendToExternalMdViewer(textToExport);
-    showToast('Abrindo visualizador externo de Markdown...');
-  };
-
-  if (btnExportExternalMd) {
-    btnExportExternalMd.addEventListener('click', handleExternalExport);
-  }
-
   if (btnOpenExternalFromModal) {
-    btnOpenExternalFromModal.addEventListener('click', handleExternalExport);
+    btnOpenExternalFromModal.addEventListener('click', () => {
+      if (!activeTextForModal) {
+        showToast('Nenhum texto para enviar ao visualizador externo!');
+        return;
+      }
+      utils.sendToExternalMdViewer(activeTextForModal);
+      showToast('Abrindo visualizador externo de Markdown...');
+    });
   }
 
   // Share URL with encoded state
