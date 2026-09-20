@@ -316,6 +316,28 @@ export const OPERATIONS = [
 
   // --- MARKDOWN ---
   {
+    id: 'importDocxToMarkdown',
+    category: 'Markdown',
+    name: 'Converter Word (.docx) → MD',
+    description: 'Abre o seletor de arquivo para converter um documento Word (.docx) para Markdown.',
+    icon: 'file-type-2',
+    fn: () => {
+      document.getElementById('file-loader')?.click();
+      return document.getElementById('editor-output')?.value || document.getElementById('editor-input')?.value || '';
+    }
+  },
+  {
+    id: 'importPdfToMarkdown',
+    category: 'Markdown',
+    name: 'Converter PDF → MD',
+    description: 'Abre o seletor de arquivo para extrair e converter o texto de um PDF para Markdown.',
+    icon: 'file-text',
+    fn: () => {
+      document.getElementById('file-loader')?.click();
+      return document.getElementById('editor-output')?.value || document.getElementById('editor-input')?.value || '';
+    }
+  },
+  {
     id: 'generateMarkdownList',
     category: 'Markdown',
     name: 'Gerar lista',
