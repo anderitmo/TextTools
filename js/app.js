@@ -166,7 +166,7 @@ function setupEventListeners(inputEl, outputEl) {
     });
   }
 
-  // Upload Text File (.txt)
+  // Upload File (.txt, .docx, .pdf, etc.)
   const btnUpload = document.getElementById('tb-upload');
   const fileInput = document.getElementById('file-loader');
   if (btnUpload && fileInput) {
@@ -174,21 +174,50 @@ function setupEventListeners(inputEl, outputEl) {
       fileInput.click();
     });
 
-    fileInput.addEventListener('change', (e) => {
+    fileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const text = evt.target.result;
-        inputEl.value = text;
-        updateMetrics(text);
-        storage.saveLastText(text);
-        window.editorUndoRedo.reset(text);
-        showToast('Arquivo TXT carregado com sucesso!');
+      const filename = file.name.toLowerCase();
+
+      try {
+        if (filename.endsWith('.docx')) {
+          showToast('Convertendo Word (.docx) para Markdown...');
+          const arrayBuffer = await file.arrayBuffer();
+          const markdownText = await utils.convertDocxToMarkdown(arrayBuffer);
+          inputEl.value = markdownText;
+          updateMetrics(markdownText);
+          storage.saveLastText(markdownText);
+          window.editorUndoRedo.reset(markdownText);
+          showToast('Arquivo Word (.docx) convertido para Markdown com sucesso!');
+        } else if (filename.endsWith('.pdf')) {
+          showToast('Convertendo PDF para Markdown...');
+          const arrayBuffer = await file.arrayBuffer();
+          const markdownText = await utils.convertPdfToMarkdown(arrayBuffer);
+          inputEl.value = markdownText;
+          updateMetrics(markdownText);
+          storage.saveLastText(markdownText);
+          window.editorUndoRedo.reset(markdownText);
+          showToast('Arquivo PDF convertido para Markdown com sucesso!');
+        } else {
+          // Plain text files (.txt, .md, .csv, .json, .sql, etc.)
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            const text = evt.target.result;
+            inputEl.value = text;
+            updateMetrics(text);
+            storage.saveLastText(text);
+            window.editorUndoRedo.reset(text);
+            showToast('Arquivo carregado com sucesso!');
+          };
+          reader.readAsText(file);
+        }
+      } catch (err) {
+        console.error('Erro ao processar arquivo:', err);
+        showToast(`Erro ao processar o arquivo: ${err.message || err}`);
+      } finally {
         fileInput.value = ''; // clear
-      };
-      reader.readAsText(file);
+      }
     });
   }
 

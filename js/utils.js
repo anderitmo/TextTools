@@ -103,6 +103,67 @@ export function toggleFullScreen(element) {
 
 // --- UNDO / REDO MANAGER CLASS ---
 
+/**
+ * Converts Word (.docx) file ArrayBuffer to Markdown using Mammoth.js.
+ */
+export async function convertDocxToMarkdown(arrayBuffer) {
+  if (typeof mammoth === 'undefined') {
+    throw new Error('Biblioteca Mammoth.js não foi carregada.');
+  }
+  const result = await mammoth.convertToMarkdown({ arrayBuffer });
+  return result.value || '';
+}
+
+/**
+ * Converts PDF file ArrayBuffer to Markdown / Text using PDF.js.
+ */
+export async function convertPdfToMarkdown(arrayBuffer) {
+  if (typeof pdfjsLib === 'undefined') {
+    throw new Error('Biblioteca PDF.js não foi carregada.');
+  }
+
+  // Set worker source URL
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const pdfDoc = await loadingTask.promise;
+  let markdown = '';
+
+  for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+    const page = await pdfDoc.getPage(pageNum);
+    const textContent = await page.getTextContent();
+    let lastY = null;
+    let pageLines = [];
+    let currentLine = '';
+
+    for (const item of textContent.items) {
+      if (!item.str && item.str !== '') continue;
+
+      // If Y coordinate position changes significantly, consider it a new line
+      if (lastY !== null && Math.abs(item.transform[5] - lastY) > 5) {
+        if (currentLine.trim()) {
+          pageLines.push(currentLine.trim());
+        }
+        currentLine = '';
+      }
+      currentLine += item.str + ' ';
+      lastY = item.transform[5];
+    }
+    if (currentLine.trim()) {
+      pageLines.push(currentLine.trim());
+    }
+
+    const pageContent = pageLines.join('\n');
+    if (pdfDoc.numPages > 1) {
+      markdown += `## Página ${pageNum}\n\n${pageContent}\n\n`;
+    } else {
+      markdown += `${pageContent}\n\n`;
+    }
+  }
+
+  return markdown.trim();
+}
+
 export class UndoRedoManager {
   constructor(initialValue = '', maxHistory = 100) {
     this.maxHistory = maxHistory;

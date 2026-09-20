@@ -16,6 +16,10 @@
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@0.469.0"></script>
+
+  <!-- External Libraries for Word (.docx) and PDF to Markdown conversion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -96,10 +100,10 @@
 
         <div class="toolbar-group">
           <!-- Text Files Upload and Download -->
-          <button id="tb-upload" class="btn-tool" title="Enviar arquivo de texto (.txt)">
-            <i data-lucide="upload"></i> Upload TXT
+          <button id="tb-upload" class="btn-tool" title="Enviar arquivo (TXT, DOCX, PDF, MD, etc.)">
+            <i data-lucide="upload"></i> Abrir Arquivo
           </button>
-          <input type="file" id="file-loader" class="hidden-uploader" accept=".txt,.csv,.json,.md,.sql" aria-label="Upload de arquivo de texto">
+          <input type="file" id="file-loader" class="hidden-uploader" accept=".txt,.csv,.json,.md,.sql,.docx,.pdf" aria-label="Upload de arquivo de texto, Word ou PDF">
 
           <button id="tb-download" class="btn-tool" title="Baixar resultado em arquivo .txt">
             <i data-lucide="download"></i> Download TXT
