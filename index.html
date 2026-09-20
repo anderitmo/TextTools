@@ -20,6 +20,9 @@
   <!-- External Libraries for Word (.docx) and PDF to Markdown conversion -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- Marked.js for HTML preview of Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
@@ -111,7 +114,13 @@
         </div>
 
         <div class="toolbar-group">
-          <!-- Sharer and Fullscreen options -->
+          <!-- Sharer, MD Preview, External Viewer and Fullscreen options -->
+          <button id="tb-preview-md" class="btn-tool" title="Visualizar resultado formatado em Markdown">
+            <i data-lucide="eye"></i> Visualizar MD
+          </button>
+          <button id="tb-export-external-md" class="btn-tool" title="Abrir no Visualizador MD Externo">
+            <i data-lucide="external-link"></i> Enviar p/ Visualizador MD
+          </button>
           <button id="tb-share" class="btn-tool" title="Copiar link de compartilhamento deste texto">
             <i data-lucide="share-2"></i> Compartilhar
           </button>
@@ -254,6 +263,27 @@
       <div class="modal-footer">
         <button id="btn-clear-history" class="btn-danger">Limpar Histórico</button>
         <button id="btn-close-history-footer" class="btn-secondary" onclick="document.getElementById('modal-history').classList.remove('visible')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Markdown Preview -->
+  <div id="modal-preview-md" class="modal-overlay" role="dialog" aria-labelledby="preview-md-modal-title" aria-modal="true">
+    <div class="modal-content" style="max-width: 800px; width: 90%;">
+      <div class="modal-header">
+        <h2 id="preview-md-modal-title">Visualização Markdown Renderizada</h2>
+        <button id="btn-close-preview-md" class="modal-close-btn" aria-label="Fechar visualização">&times;</button>
+      </div>
+      <div class="modal-body" style="background: var(--bg-primary); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); max-height: 60vh; overflow-y: auto;">
+        <div id="markdown-rendered-content" class="markdown-body">
+          <!-- Rendered HTML content -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-open-external-from-modal" class="btn-primary" style="background: var(--accent-color, #4f46e5); color: #fff; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+          <i data-lucide="external-link" style="width:16px;height:16px;"></i> Abrir no Visualizador Externo
+        </button>
+        <button id="btn-close-preview-md-footer" class="btn-secondary" onclick="document.getElementById('modal-preview-md').classList.remove('visible')">Fechar</button>
       </div>
     </div>
   </div>

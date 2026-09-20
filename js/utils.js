@@ -115,7 +115,18 @@ export async function convertDocxToMarkdown(arrayBuffer) {
 }
 
 /**
- * Converts PDF file ArrayBuffer to Markdown / Text using PDF.js.
+ * Converts Word (.docx) file ArrayBuffer to Plain Text using Mammoth.js.
+ */
+export async function convertDocxToTxt(arrayBuffer) {
+  if (typeof mammoth === 'undefined') {
+    throw new Error('Biblioteca Mammoth.js não foi carregada.');
+  }
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  return result.value || '';
+}
+
+/**
+ * Converts PDF file ArrayBuffer to Markdown using PDF.js.
  */
 export async function convertPdfToMarkdown(arrayBuffer) {
   if (typeof pdfjsLib === 'undefined') {
@@ -162,6 +173,46 @@ export async function convertPdfToMarkdown(arrayBuffer) {
   }
 
   return markdown.trim();
+}
+
+/**
+ * Converts PDF file ArrayBuffer to Plain Text using PDF.js.
+ */
+export async function convertPdfToTxt(arrayBuffer) {
+  if (typeof pdfjsLib === 'undefined') {
+    throw new Error('Biblioteca PDF.js não foi carregada.');
+  }
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const pdfDoc = await loadingTask.promise;
+  let text = '';
+
+  for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+    const page = await pdfDoc.getPage(pageNum);
+    const textContent = await page.getTextContent();
+    let pageText = textContent.items.map(item => item.str).join(' ');
+    text += pageText + '\n\n';
+  }
+
+  return text.trim();
+}
+
+/**
+ * Sends Markdown content to the external visualizer at https://anderitmo.github.io/visualizador-md-com-post/
+ */
+export function sendToExternalMdViewer(markdownText) {
+  if (!markdownText) return false;
+
+  // Encode text as Base64 to safely pass via URL or form
+  const utf8Bytes = new TextEncoder().encode(markdownText);
+  const binString = Array.from(utf8Bytes, byte => String.fromCharCode(byte)).join('');
+  const base64 = btoa(binString);
+
+  const targetUrl = `https://anderitmo.github.io/visualizador-md-com-post/#content=${encodeURIComponent(base64)}`;
+  window.open(targetUrl, '_blank');
+  return true;
 }
 
 export class UndoRedoManager {
