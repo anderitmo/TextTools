@@ -636,6 +636,12 @@ export function triggerOperation(operationId) {
   const outputEl = document.getElementById('editor-output');
   if (!inputEl || !outputEl) return;
 
+  // Operações de importação de arquivo apenas abrem o seletor de arquivos sem modificar o Output imediatamente
+  if (operationId.startsWith('import')) {
+    op.fn();
+    return;
+  }
+
   // Encadeamento: se o output já tiver algum resultado, usamos ele como base para a próxima operação.
   // Caso contrário, usamos o conteúdo do input.
   const textBefore = outputEl.value || inputEl.value;

@@ -197,6 +197,7 @@ function setupEventListeners(inputEl, outputEl) {
             showToast('Arquivo Word (.docx) convertido para Markdown com sucesso!');
           }
           inputEl.value = resultText;
+          outputEl.value = ''; // Limpa o output anterior para reiniciar a cadeia de transformações no novo texto do Input
           updateMetrics(resultText);
           storage.saveLastText(resultText);
           window.editorUndoRedo.reset(resultText);
@@ -213,6 +214,7 @@ function setupEventListeners(inputEl, outputEl) {
             showToast('Arquivo PDF convertido para Markdown com sucesso!');
           }
           inputEl.value = resultText;
+          outputEl.value = ''; // Limpa o output anterior para reiniciar a cadeia de transformações no novo texto do Input
           updateMetrics(resultText);
           storage.saveLastText(resultText);
           window.editorUndoRedo.reset(resultText);
@@ -222,6 +224,7 @@ function setupEventListeners(inputEl, outputEl) {
           reader.onload = (evt) => {
             const text = evt.target.result;
             inputEl.value = text;
+            outputEl.value = ''; // Limpa o output anterior para reiniciar a cadeia de transformações
             updateMetrics(text);
             storage.saveLastText(text);
             window.editorUndoRedo.reset(text);

@@ -132,7 +132,7 @@ export async function convertPdfToMarkdown(arrayBuffer) {
   if (typeof pdfjsLib === 'undefined') {
     throw new Error('Biblioteca PDF.js não foi carregada.');
   }
-
+  
   // Set worker source URL
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -149,7 +149,7 @@ export async function convertPdfToMarkdown(arrayBuffer) {
 
     for (const item of textContent.items) {
       if (!item.str && item.str !== '') continue;
-
+      
       // If Y coordinate position changes significantly, consider it a new line
       if (lastY !== null && Math.abs(item.transform[5] - lastY) > 5) {
         if (currentLine.trim()) {
@@ -182,7 +182,7 @@ export async function convertPdfToTxt(arrayBuffer) {
   if (typeof pdfjsLib === 'undefined') {
     throw new Error('Biblioteca PDF.js não foi carregada.');
   }
-
+  
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
   const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
