@@ -109,7 +109,7 @@ export const OPERATIONS = [
     category: 'Limpeza',
     name: 'Remover caracteres especiais',
     description: 'Mantém apenas letras, números e espaços básicos.',
-    icon: 'slash-by-subtraction',
+    icon: 'slash',
     fn: transform.removeSpecialChars
   },
   {
