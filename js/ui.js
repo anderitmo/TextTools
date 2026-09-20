@@ -322,6 +322,31 @@ export const OPERATIONS = [
     description: 'Abre o seletor de arquivo para converter um documento Word (.docx) para Markdown.',
     icon: 'file-type-2',
     fn: () => {
+      window.pendingImportMode = 'md';
+      document.getElementById('file-loader')?.click();
+      return document.getElementById('editor-output')?.value || document.getElementById('editor-input')?.value || '';
+    }
+  },
+  {
+    id: 'importDocxToTxt',
+    category: 'Conversões',
+    name: 'Converter Word (.docx) → TXT',
+    description: 'Extrai texto puro de um documento Word (.docx).',
+    icon: 'file-text',
+    fn: () => {
+      window.pendingImportMode = 'txt';
+      document.getElementById('file-loader')?.click();
+      return document.getElementById('editor-output')?.value || document.getElementById('editor-input')?.value || '';
+    }
+  },
+  {
+    id: 'importPdfToTxt',
+    category: 'Conversões',
+    name: 'Converter PDF → TXT',
+    description: 'Extrai texto puro de um documento PDF.',
+    icon: 'file-text',
+    fn: () => {
+      window.pendingImportMode = 'txt';
       document.getElementById('file-loader')?.click();
       return document.getElementById('editor-output')?.value || document.getElementById('editor-input')?.value || '';
     }
@@ -333,6 +358,7 @@ export const OPERATIONS = [
     description: 'Abre o seletor de arquivo para extrair e converter o texto de um PDF para Markdown.',
     icon: 'file-text',
     fn: () => {
+      window.pendingImportMode = 'md';
       document.getElementById('file-loader')?.click();
       return document.getElementById('editor-output')?.value || document.getElementById('editor-input')?.value || '';
     }

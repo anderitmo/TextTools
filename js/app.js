@@ -180,25 +180,42 @@ function setupEventListeners(inputEl, outputEl) {
 
       const filename = file.name.toLowerCase();
 
+      const importMode = window.pendingImportMode || 'md';
+      window.pendingImportMode = null; // reset
+
       try {
         if (filename.endsWith('.docx')) {
-          showToast('Convertendo Word (.docx) para Markdown...');
           const arrayBuffer = await file.arrayBuffer();
-          const markdownText = await utils.convertDocxToMarkdown(arrayBuffer);
-          inputEl.value = markdownText;
-          updateMetrics(markdownText);
-          storage.saveLastText(markdownText);
-          window.editorUndoRedo.reset(markdownText);
-          showToast('Arquivo Word (.docx) convertido para Markdown com sucesso!');
+          let resultText = '';
+          if (importMode === 'txt') {
+            showToast('Extraindo texto puro do Word (.docx)...');
+            resultText = await utils.convertDocxToTxt(arrayBuffer);
+            showToast('Arquivo Word (.docx) convertido para TXT com sucesso!');
+          } else {
+            showToast('Convertendo Word (.docx) para Markdown...');
+            resultText = await utils.convertDocxToMarkdown(arrayBuffer);
+            showToast('Arquivo Word (.docx) convertido para Markdown com sucesso!');
+          }
+          inputEl.value = resultText;
+          updateMetrics(resultText);
+          storage.saveLastText(resultText);
+          window.editorUndoRedo.reset(resultText);
         } else if (filename.endsWith('.pdf')) {
-          showToast('Convertendo PDF para Markdown...');
           const arrayBuffer = await file.arrayBuffer();
-          const markdownText = await utils.convertPdfToMarkdown(arrayBuffer);
-          inputEl.value = markdownText;
-          updateMetrics(markdownText);
-          storage.saveLastText(markdownText);
-          window.editorUndoRedo.reset(markdownText);
-          showToast('Arquivo PDF convertido para Markdown com sucesso!');
+          let resultText = '';
+          if (importMode === 'txt') {
+            showToast('Extraindo texto puro do PDF...');
+            resultText = await utils.convertPdfToTxt(arrayBuffer);
+            showToast('Arquivo PDF convertido para TXT com sucesso!');
+          } else {
+            showToast('Convertendo PDF para Markdown...');
+            resultText = await utils.convertPdfToMarkdown(arrayBuffer);
+            showToast('Arquivo PDF convertido para Markdown com sucesso!');
+          }
+          inputEl.value = resultText;
+          updateMetrics(resultText);
+          storage.saveLastText(resultText);
+          window.editorUndoRedo.reset(resultText);
         } else {
           // Plain text files (.txt, .md, .csv, .json, .sql, etc.)
           const reader = new FileReader();
@@ -233,6 +250,58 @@ function setupEventListeners(inputEl, outputEl) {
       utils.downloadTextFile(textToSave, 'texttools_output.txt');
       showToast('Arquivo baixado!');
     });
+  }
+
+  // Preview Markdown Modal
+  const btnPreviewMd = document.getElementById('tb-preview-md');
+  const modalPreviewMd = document.getElementById('modal-preview-md');
+  const btnClosePreviewMd = document.getElementById('btn-close-preview-md');
+  const mdRenderedContainer = document.getElementById('markdown-rendered-content');
+
+  const openPreviewModal = () => {
+    const textToPreview = outputEl.value || inputEl.value;
+    if (!textToPreview) {
+      showToast('Nenhum texto/Markdown para visualizar!');
+      return;
+    }
+    if (typeof marked !== 'undefined') {
+      mdRenderedContainer.innerHTML = marked.parse(textToPreview);
+    } else {
+      mdRenderedContainer.innerText = textToPreview;
+    }
+    modalPreviewMd?.classList.add('visible');
+  };
+
+  if (btnPreviewMd) {
+    btnPreviewMd.addEventListener('click', openPreviewModal);
+  }
+
+  if (btnClosePreviewMd && modalPreviewMd) {
+    btnClosePreviewMd.addEventListener('click', () => {
+      modalPreviewMd.classList.remove('visible');
+    });
+  }
+
+  // Export to External Visualizer (visualizador-md-com-post)
+  const btnExportExternalMd = document.getElementById('tb-export-external-md');
+  const btnOpenExternalFromModal = document.getElementById('btn-open-external-from-modal');
+
+  const handleExternalExport = () => {
+    const textToExport = outputEl.value || inputEl.value;
+    if (!textToExport) {
+      showToast('Nenhum texto para enviar ao visualizador externo!');
+      return;
+    }
+    utils.sendToExternalMdViewer(textToExport);
+    showToast('Abrindo visualizador externo de Markdown...');
+  };
+
+  if (btnExportExternalMd) {
+    btnExportExternalMd.addEventListener('click', handleExternalExport);
+  }
+
+  if (btnOpenExternalFromModal) {
+    btnOpenExternalFromModal.addEventListener('click', handleExternalExport);
   }
 
   // Share URL with encoded state
@@ -318,6 +387,7 @@ function setupEventListeners(inputEl, outputEl) {
     if (e.key === 'Escape') {
       modalHistory?.classList.remove('visible');
       modalAbout?.classList.remove('visible');
+      document.getElementById('modal-preview-md')?.classList.remove('visible');
     }
   });
 
